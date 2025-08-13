@@ -1,0 +1,42 @@
+name: Build and Upload Resume
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "resume.tex"
+  workflow_dispatch:
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install LaTeX environment
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+
+      # 3. Compile the resume.tex to PDF
+      - name: Compile resume.tex
+        run: |
+          pdflatex resume.tex
+
+      # 4. Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      # 5. Upload to S3
+      - name: Upload resume.pdf to S3
+        run: |
+          aws s3 cp resume.pdf s3://prashant-dhirendra-public-e4f24/resume.pdf
