@@ -39,4 +39,4 @@ jobs:
       # 5. Upload to S3
       - name: Upload resume.pdf to S3
         run: |
-          aws s3 cp resume.pdf s3://prashant-dhirendra-public-e4f24/resume.pdf
+          aws s3 cp resume.pdf s3://prashant-dhirendra-public-e4f24/resume.pdf --acl public-read
