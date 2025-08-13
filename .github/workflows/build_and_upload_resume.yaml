@@ -3,7 +3,7 @@ name: Build and Upload Resume
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - "resume.tex"
   workflow_dispatch:
