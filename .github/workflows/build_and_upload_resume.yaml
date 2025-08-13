@@ -11,24 +11,20 @@ on:
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
+    container:
+      image: blang/latex:ctanfull  # Preinstalled full TeX Live
 
     steps:
       # 1. Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Install LaTeX environment
-      - name: Install LaTeX
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended
-
-      # 3. Compile the resume.tex to PDF
+      # 2. Compile the resume.tex to PDF
       - name: Compile resume.tex
         run: |
           pdflatex resume.tex
 
-      # 4. Configure AWS credentials
+      # 3. Configure AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -36,7 +32,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # 5. Upload to S3
+      # 4. Upload to S3 (make public)
       - name: Upload resume.pdf to S3
         run: |
-          aws s3 cp resume.pdf s3://prashant-dhirendra-public-e4f24/resume.pdf --acl public-read
+          aws s3 cp resume.pdf s3://prashant-dhirendra-resume-bucket/resume.pdf
