@@ -1,8 +1,14 @@
 # resume
 LaTeX template for my personal resume
 
-Based off of [sb2nov/resume](https://github.com/sb2nov/resume/)
+Based off of [jakegut/resume](https://github.com/jakegut/resume)
 
-Use it on overleaf: [Jake's Resume](https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs) (Not updated)
+## To Do
+- [ ] Update the info with my details 
+- [ ] Create a project which will use docker to parse the Tex into PDF
+- [ ] Update the PDF to AWS S3 bucket
+- [ ] Link my blog to read the updated resume from S3 bucket
+
+
 
 ![Resume Preview](resume.png)
